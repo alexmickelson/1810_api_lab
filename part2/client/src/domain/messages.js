@@ -2,5 +2,6 @@ var messages = []
 
 export default {
     setMessages: (newMessages) => messages = newMessages,
-    getMessages: () => messages,
+    getTopMessages: () => messages.filter(m => !m.parentId),
+    getMessagesByParent: (id) => messages.filter(m => m.parentId === id)
 }

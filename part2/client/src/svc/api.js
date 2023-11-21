@@ -7,7 +7,8 @@ export default {
             text: messageText,
             parentId: parent
         }
-        const result = await axios.post(`${apiAddress}/messages`, body)
+        await axios.post(`${apiAddress}/messages`, body)
+
     },
     getMessages: async () => {
         const response = await axios.get(`${apiAddress}/messages`)
