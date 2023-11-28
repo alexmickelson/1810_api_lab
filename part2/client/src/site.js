@@ -7,10 +7,10 @@ form.addEventListener('submit', async (e) => {
     e.stopPropagation()
     e.stopImmediatePropagation()
     
-    const text = document.getElementById("messageText").value
-    await api.sendMessage(text);
+    const textElement = document.getElementById("messageText")
+    await api.sendMessage(textElement.value);
 
-    input.value = ""
+    textElement.value = ""
     
     await ui.displayMessages();
 })

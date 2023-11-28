@@ -1,4 +1,4 @@
-const apiAddress = "http://localhost:5154"
+const apiAddress = "http://localhost:5045"
 export default {
     sendMessage: async (messageText, parentId) => {
         const parent = parentId ?? null
