@@ -1,17 +1,24 @@
-const apiAddress = "http://localhost:5045"
-export default {
-    sendMessage: async (messageText, parentId) => {
-        const parent = parentId ?? null
-        const body = {
-            id: Date.now(),
-            text: messageText,
-            parentId: parent
-        }
-        await axios.post(`${apiAddress}/messages`, body)
+const apiAddress = "http://localhost:5045";
 
+export const sendMessageToApi = async (messageText, parentId) => {
+  const parent = parentId ?? null;
+  const body = {
+    id: Date.now(), // unique id as a long data type
+    text: messageText,
+    parentId: parent, // same data type as id
+  };
+  await fetch(`${apiAddress}/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    getMessages: async () => {
-        const response = await axios.get(`${apiAddress}/messages`)
-        return response.data;
-    }
-}
+    body: JSON.stringify(body),
+  });
+};
+
+export const getMessagesFromApi = async () => {
+  const response = await fetch(`${apiAddress}/messages`, {
+    method: "GET",
+  });
+  return response.json();
+};

@@ -1,13 +1,14 @@
-import api from "../svc/api.js"
-import messagesDomain from "../domain/messages.js"
+import {setMessages, getTopMessages, getMessagesByParent} from "../domain/messages.js"
+import {getMessagesFromApi} from "../svc/api.js"
+
 
 const  displayMessages =async () => {
-  messagesDomain.setMessages(await api.getMessages())
+  setMessages(await getMessagesFromApi())
 
   const messageContainer = document.getElementById("previousMessages")
   messageContainer.replaceChildren()
 
-  messagesDomain.getTopMessages().forEach((msg) => {
+  getTopMessages().forEach((msg) => {
     const element = createMessageWithForm(msg)
     messageContainer.appendChild(element)
   })
@@ -15,7 +16,7 @@ const  displayMessages =async () => {
 
 const createChildrenMessages = (msg) => {
   const childrenUL = document.createElement('ul')
-  const childrenMessages = messagesDomain.getMessagesByParent(msg.id)
+  const childrenMessages = getMessagesByParent(msg.id)
   childrenMessages.forEach(m => {
     const e = createMessageWithForm(m)
     childrenUL.appendChild(e)
@@ -35,7 +36,7 @@ const createNestedReplyForm = (msg) => {
   formElement.addEventListener("submit", async (e) => {
     e.preventDefault();
     const text = input.value
-    await api.sendMessage(text, msg.id)
+    await sendMessageToApi(text, msg.id)
     input.value = ""
     displayMessages();
   })
